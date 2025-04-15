@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Criando Tabelas via T-SQL</title>
+</head>
+<body>
+  <h1>Script T-SQL: Criação de Tabelas</h1>
+  <p>Este script cria as tabelas <strong>tblMarcas</strong> e <strong>tblModelos</strong> no banco de dados <code>Concessionaria</code>.</p>
+
+  <pre>
+USE Concessionaria;
+
+-- Tabela de Marcas
+CREATE TABLE tblMarcas
+(
+   idMarca     INT         IDENTITY       PRIMARY KEY,
+   nomeMarca   NCHAR(10)   NOT NULL       UNIQUE
+);
+
+-- Visualizando estrutura da tabela de Marcas
+EXEC sp_help tblMarcas;
+
+-- Tabela de Modelos
+CREATE TABLE tblModelos
+(
+   idModelo    INT          IDENTITY,
+   idMarca     INT          NOT NULL,
+   nomeModelo  NCHAR(30)    NOT NULL,
+
+   CONSTRAINT PK_tblModelos_idModelo PRIMARY KEY (idModelo),
+   CONSTRAINT FK_tblModelos_tblMarcas_idMarca FOREIGN KEY (idMarca)
+       REFERENCES tblMarcas(idMarca),
+   CONSTRAINT UQ_tblModelos_nomeModelo UNIQUE (nomeModelo)
+);
+  </pre>
+</body>
+</html>
